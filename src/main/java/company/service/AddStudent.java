@@ -16,4 +16,7 @@ public class AddStudent {
             addStudent(newInfo,students);
         }
     }
+    public boolean isStudentCorrent(String[] infoArr){
+        return infoArr.length==6&&infoArr[2].contains("数学")&&infoArr[3].contains("语文")&&infoArr[4].contains("英语")&&infoArr[5].contains("编程");
+    }
 }
