@@ -1,5 +1,9 @@
 package main.java.company.service;
 
+import main.java.company.model.Student;
+import main.java.company.model.Subject;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,5 +22,16 @@ public class AddStudent {
     }
     public boolean isStudentCorrent(String[] infoArr){
         return infoArr.length==6&&infoArr[2].contains("数学")&&infoArr[3].contains("语文")&&infoArr[4].contains("英语")&&infoArr[5].contains("编程");
+    }
+    public Student addStudentMessage(String[] infoArr){
+        List<Subject> subjectList=new ArrayList<>();
+        for(int i=2;i<infoArr.length;i++){
+            String course= infoArr[i].substring(0, infoArr[i].indexOf(":"));
+            int score=Integer.parseInt(infoArr[i].substring(infoArr[i].indexOf(":")+2));
+            Subject subject=new Subject(course,score);
+            subjectList.add(subject);
+        }
+        Student student=new Student(infoArr[0],infoArr[1],subjectList);
+        return student;
     }
 }
