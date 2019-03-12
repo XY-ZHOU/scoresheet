@@ -3,6 +3,7 @@ package main.java.company.service;
 import main.java.company.model.Student;
 import main.java.company.tools.Tool;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,5 +20,16 @@ public class GetTranscripts {
             tool.printTranscript(getAllMessage(studentsOfPrint));
             tool.restoreTranscript(getAllMessage(studentsOfPrint));
         }
+    }
+    public List<String> getAllMessage(List<Student> studentsOfPrint) {
+        List<Integer> sumList = new ArrayList<>();
+        List<String> allMessage = new ArrayList<>();
+        for (Student student : studentsOfPrint) {
+            allMessage.add(oneStudentMessage(student));
+            sumList.add(student.getSum());
+        }
+        allMessage.add(getMedianOfSum(sumList));
+        allMessage.add(getAverageOfSum (sumList));
+        return allMessage;
     }
 }
