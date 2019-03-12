@@ -41,4 +41,7 @@ public class GetTranscripts {
         }
         return student.getName()+"|"+scoreStr+Double.toString(student.getAverage())+"|"+Integer.toString(student.getSum());
     }
+    public String getAverageOfSum (List<Integer> sumList){
+        return  Double.toString((double) sumList.stream().reduce(0, (a, b) -> a + b) / sumList.size());
+    }
 }
