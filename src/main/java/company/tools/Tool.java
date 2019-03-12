@@ -1,5 +1,8 @@
 package main.java.company.tools;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 public class Tool {
@@ -20,5 +23,39 @@ public class Tool {
         System.out.println("全班总分平均数："+allMessage.get(allMessage.size()-2));
         System.out.println("全班总分中位数："+allMessage.get(allMessage.size()-1));
 
+    }
+    public void restoreTranscript(List<String> allMessage){
+        BufferedWriter out = null;
+        try{
+            File file = new File("transcriptMessage.txt");
+            out = new BufferedWriter(new FileWriter(file));
+
+            out.write("成绩单");
+            out.newLine();
+            out.write("姓名|数学|语文|英语|编程|平均分|总分");
+            out.newLine();
+            out.write("========================");
+            out.newLine();
+            for (int i=0;i<allMessage.size()-2;i++){
+                out.write(allMessage.get(i));
+                out.newLine();
+            }
+            out.write("========================");
+            out.newLine();
+            out.write("全班总分平均数："+allMessage.get(allMessage.size()-2));
+            out.newLine();
+            out.write("全班总分中位数："+allMessage.get(allMessage.size()-1));
+            out.newLine();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            try{
+                out.close();
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally {
+                out=null;
+            }
+        }
     }
 }
