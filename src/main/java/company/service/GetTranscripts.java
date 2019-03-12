@@ -1,6 +1,7 @@
 package main.java.company.service;
 
 import main.java.company.model.Student;
+import main.java.company.model.Subject;
 import main.java.company.tools.Tool;
 
 import java.util.ArrayList;
@@ -31,5 +32,13 @@ public class GetTranscripts {
         allMessage.add(getMedianOfSum(sumList));
         allMessage.add(getAverageOfSum (sumList));
         return allMessage;
+    }
+    public String oneStudentMessage(Student student){
+        List<Subject> allScores=student.getScores();
+        String scoreStr="";
+        for(Subject subject :allScores){
+            scoreStr+=subject.getScore()+"|";
+        }
+        return student.getName()+"|"+scoreStr+Double.toString(student.getAverage())+"|"+Integer.toString(student.getSum());
     }
 }
