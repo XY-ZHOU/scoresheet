@@ -10,18 +10,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GetTranscripts {
-    public void getTranscript(String idStr, List<Student> students){
-        Tool tool=new Tool();
+    public void getTranscript(String idStr, List<Student> students) {
+        Tool tool = new Tool();
         String[] idArr = idStr.split(", ");
         List<String> idList = Arrays.asList(idArr);
         List<Student> studentsOfPrint = students.stream().filter(student -> idList.contains(student.getId())).collect(Collectors.toList());
-        if(studentsOfPrint.size()==0){
+        if (studentsOfPrint.size() == 0) {
             System.out.println("请按正确的格式输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：");
-        }else{
+        } else {
             tool.printTranscript(getAllMessage(studentsOfPrint));
             tool.restoreTranscript(getAllMessage(studentsOfPrint));
         }
     }
+
     public List<String> getAllMessage(List<Student> studentsOfPrint) {
         List<Integer> sumList = new ArrayList<>();
         List<String> allMessage = new ArrayList<>();
@@ -30,18 +31,27 @@ public class GetTranscripts {
             sumList.add(student.getSum());
         }
         allMessage.add(getMedianOfSum(sumList));
-        allMessage.add(getAverageOfSum (sumList));
+        allMessage.add(getAverageOfSum(sumList));
         return allMessage;
     }
-    public String oneStudentMessage(Student student){
-        List<Subject> allScores=student.getScores();
-        String scoreStr="";
-        for(Subject subject :allScores){
-            scoreStr+=subject.getScore()+"|";
+
+    public String oneStudentMessage(Student student) {
+        List<Subject> allScores = student.getScores();
+        String scoreStr = "";
+        for (Subject subject : allScores) {
+            scoreStr += subject.getScore() + "|";
         }
-        return student.getName()+"|"+scoreStr+Double.toString(student.getAverage())+"|"+Integer.toString(student.getSum());
+        return student.getName() + "|" + scoreStr + Double.toString(student.getAverage()) + "|" + Integer.toString(student.getSum());
     }
-    public String getAverageOfSum (List<Integer> sumList){
-        return  Double.toString((double) sumList.stream().reduce(0, (a, b) -> a + b) / sumList.size());
+
+    public String getAverageOfSum(List<Integer> sumList) {
+        return Double.toString((double) sumList.stream().reduce(0, (a, b) -> a + b) / sumList.size());
+    }
+
+    public String getMedianOfSum(List<Integer> sumList) {
+        List<Integer> sortedSumList = sumList.stream().sorted().collect(Collectors.toList());
+        int lowMiddle = (int) Math.floor((sortedSumList.size() - 1) / 2.0);
+        int highMiddle = (int) Math.ceil((sortedSumList.size() - 1) / 2.0);
+        return Double.toString((sortedSumList.get(lowMiddle) + sortedSumList.get(highMiddle)) / 2.0);
     }
 }
